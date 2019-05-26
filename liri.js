@@ -1,18 +1,18 @@
 require('dotenv').config();
-var axios = require('axios');
-var keys = require('./keys.js');
-var fs = require('fs');
+var axios = require('axios'); //Axios api
+var keys = require('./keys.js'); //links to js file to export spotify keys
+var fs = require('fs'); //used for reading text files
 
 var action = process.argv[2];
 var input = process.argv[3];
 
-var Spotify = require('node-spotify-api');
+var Spotify = require('node-spotify-api'); //spotify api call
 
 var spotify = new Spotify({
   id: keys.spotify.id,
   secret: keys.spotify.secret
 });
-var moment = require('moment'); //Got thsi from Momentjs.com/docs/ page
+var moment = require('moment'); //Got thsi from Momentjs.com/docs/ page for moment
 moment().format();
 
 if (action === 'movie-this') {
@@ -25,6 +25,7 @@ if (action === 'movie-this') {
   doThis();
 }
 
+//Function for finding next concert of artist
 function concertThis() {
   console.log(input);
 
@@ -47,6 +48,7 @@ function concertThis() {
     });
 }
 
+//Function for OMDB to get movie information
 function movieThis() {
   if (input === undefined) {
     console.log(
@@ -75,8 +77,8 @@ function movieThis() {
   }
 }
 
+//Function to get song/artist info from spotify
 function spotifyThis() {
-  //   if (!artist) {
   if (input === undefined || null) {
     input = 'The Sign';
   }
@@ -95,9 +97,9 @@ function spotifyThis() {
       console.log(err);
     });
 }
-
+// This function will not put the text into the spotifyThis function. It does call it but does not produce the
+//   correct output.
 function doThis() {
-  // var doWhat = function () {
   fs.readFile('random.txt', 'utf8', function(error, data) {
     console.log(data);
     var dataArr = data.split(',');
